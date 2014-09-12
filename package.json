@@ -1,0 +1,23 @@
+{
+  "name": "scourge",
+  "description": "Replace resource locators in JavaScript and CSS files, great for static asset hashing",
+  "version": "1.0.0",
+  "homepage": "https://github.com/bevacqua/scourge",
+  "author": {
+    "name": "Nicolas Bevacqua",
+    "email": "ng@bevacqua.io",
+    "url": "http://bevacqua.io"
+  },
+  "main": "scourge.js",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/bevacqua/scourge.git"
+  },
+  "bin": {
+    "scourge": "bin/scourge"
+  },
+  "dependencies": {
+    "minimist": "^1.1.0"
+  }
+}
