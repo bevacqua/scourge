@@ -2,7 +2,22 @@
 
 'use strict';
 
+var fs = require('fs');
 var argv = require('minimist')(process.argv.slice(2));
+var stdin = require('get-stdin');
 var scourge = require('..');
 
-scourge(argv._, argv);
+if (argv.map) {
+  go(read(argv.map));
+} else {
+  stdin(go);
+}
+
+function read (file) {
+  return fs.readFileSync(file, { encoding: 'utf8' });
+}
+
+function go (data) {
+  argv.map = data;
+  scourge(argv._, argv);
+}

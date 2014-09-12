@@ -16,12 +16,13 @@ The API exposes a function.
 
 ### `scourge(directories, options)`
 
-Scans the provided directories and any sub-directories for JavaScript or CSS files, fixing references according to the provided manifest.
+Scans the provided directories and any sub-directories for JavaScript, CSS, and Jade files; fixing references according to the provided manifest.
 
 Option      | Description
 ------------|--------------
  `baseUrl`  | The base url to detect, defaults to `/`
  `basePath` | Relative base path that matches `baseUrl`, defaults to `.`
+ `map`      | Object mapping paths to replace with replacement paths
 
 ## CLI
 
@@ -40,6 +41,8 @@ The CLI works great with `reaver`, being able to consume its output directly.
 ```shell
 reaver public/img/* | scourge views
 ```
+
+Alternatively provide a `--map` option, pointing to a JSON file.
 
 # License
 
