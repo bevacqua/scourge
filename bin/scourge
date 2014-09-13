@@ -6,6 +6,7 @@ var fs = require('fs');
 var argv = require('minimist')(process.argv.slice(2));
 var stdin = require('get-stdin');
 var scourge = require('..');
+var hyphenated = /-([a-z])/g;
 
 if (argv.map) {
   go(read(argv.map));
@@ -13,12 +14,26 @@ if (argv.map) {
   stdin(go);
 }
 
+function convertCase (key) {
+  if (key.indexOf('-') !== -1) {
+    argv[camel(key)] = argv[key];
+    delete argv[key];
+  }
+}
+
+function camel (text) {
+  return text.replace(hyphenated, function (m, w) {
+    return w.toUpperCase();
+  });
+}
+
 function read (file) {
   return fs.readFileSync(file, { encoding: 'utf8' });
 }
 
 function go (data) {
-  argv.map = data;
+  Object.keys(argv).forEach(convertCase);
+  argv.map = JSON.parse(data);
   scourge(argv._, argv, done);
 }
 
