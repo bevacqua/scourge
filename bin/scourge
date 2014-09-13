@@ -19,5 +19,12 @@ function read (file) {
 
 function go (data) {
   argv.map = data;
-  scourge(argv._, argv);
+  scourge(argv._, argv, done);
+}
+
+function done (err) {
+  if (err) {
+    throw new Error(err.message);
+  }
+  process.exit();
 }
