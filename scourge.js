@@ -2,10 +2,11 @@
 
 var fs = require('fs');
 var path = require('path');
+var util = require('util');
 var multi = require('multi-glob');
 var trailing = /\/$/;
-var expand = '**/*.{js,css,jade}';
-var transformers = require('./transformers');
+var expand = '**/*.{js,css,html,jade}';
+var escapegoat = /[-\\/[\]{}().?+*^$|]/g;
 
 function everything (dir) {
   return trailing.test(dir) ? dir + expand : dir + '/' + expand;
@@ -38,22 +39,26 @@ function api (sources, options, done) {
     var ext = path.extname(file).substr(1);
     var orig = read(file);
     var diff = transform(orig);
-    if (diff.length !== orig.length) { // use case is asset hashing, meaning the length will always differ
-      write(file, diff);
+    if (diff.length !== orig.length) {
+      write(file, diff); // use case is asset hashing, meaning the length will always differ
     }
   }
 
   function transform (data) {
+    var domain = escape(o.domain);
     return Object.keys(o.map).reduce(convert, data);
 
     function convert (result, key) {
       var url = uri(key);
       var replacement = uri(o.map[key]);
-      while (result.indexOf(url) !== -1) {
-        result = result.replace(url, replacement);
-      }
-      return result;
+      var pattern = util.format('[\'"(](%s)?%s[\'")]', domain, escape(url));
+      var r = new RegExp(pattern, 'g');
+      return result.replace(r, '$1' + replacement);
     }
+  }
+
+  function escape (text) {
+    return text.replace(escapegoat, '\\$&');
   }
 
   function read (file) {
@@ -65,7 +70,7 @@ function api (sources, options, done) {
   }
 
   function uri (file) {
-    return file.replace(o.basePath, o.baseUrl)
+    return file.replace(o.basePath, o.baseUrl);
   }
 
   function phys (url) {

@@ -18,12 +18,13 @@ The API exposes a function.
 
 Scans the provided directories and any sub-directories for JavaScript, CSS, and Jade files; fixing references according to the provided manifest.
 
-Option      | Description
-------------|--------------
- `baseUrl`  | The base url to detect, defaults to `/`
- `basePath` | Relative base path that matches `baseUrl`, defaults to `./public`
- `map`      | Object mapping paths to replace with replacement paths
- `glob`     | Assume the provided paths are directories to be globbed, defaults to `true`. When set to `false`, treats them as raw file paths instead
+Option     | Description
+-----------|--------------
+`baseUrl`  | The base url to detect, defaults to `/`
+`basePath` | Relative base path that matches `baseUrl`, defaults to `./public`
+`map`      | Object mapping paths to replace with replacement paths
+`glob`     | Assume the provided paths are directories to be globbed, defaults to `true`. When set to `false`, treats them as raw file paths instead
+`domain`   | Domain reference that may appear in instances of the URL, e.g: `http://ponyfoo.com`
 
 `done` is invoked when the operation is complete.
 
