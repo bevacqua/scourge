@@ -53,7 +53,7 @@ function api (sources, options, done) {
 
     function convert (result, key) {
       var url = uri(key);
-      var pattern = util.format('([\'"(])(%s)?%s([\'")])', domain, escape(url));
+      var pattern = util.format('(\\\\?[\'"(])(%s)?%s(\\\\?[\'")])', domain, escape(url));
       var replacement = util.format('$1$2%s$3', uri(o.map[key]));
       return result.replace(new RegExp(pattern, 'g'), replacement);
     }

@@ -1,7 +1,7 @@
 {
   "name": "scourge",
   "description": "Replace resource locators in JavaScript and CSS files, great for static asset hashing",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "homepage": "https://github.com/bevacqua/scourge",
   "author": {
     "name": "Nicolas Bevacqua",
